@@ -1,0 +1,41 @@
+{{!< default}}
+
+{{#post}}
+    <article class="w-full bg-white dark:bg-slate-800 dark:text-white rounded-3xl">  
+        <div class="{{#match @custom.post_image_style "Small"}} pt-6 {{/match}}">
+        {{#match @page.show_title_and_feature_image}} 
+            {{#if feature_image}}
+                <figure>
+                    <img class="{{#match @custom.post_image_style "Full"}}w-full rounded-t-3xl{{/match}}{{#match @custom.post_image_style "Hidden"}} hidden{{/match}}{{#match @custom.post_image_style "Small"}} w-1/2 mx-auto{{/match}} sm:h-96 lg:h-[500px] object-cover"
+                                        srcset="{{img_url feature_image size="s"}} 300w,
+                                                {{img_url feature_image size="m"}} 600w,
+                                                {{img_url feature_image size="l"}} 1000w,
+                                                {{img_url feature_image size="xl"}} 2000w"
+                                        sizes="(max-width: 1000px) 400px, 800px"
+                                        src="{{img_url feature_image size="m"}}"
+                                        alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
+                                        loading="lazy"
+                                    />
+                    {{#if feature_image_caption}}
+                        <figcaption class="italic text-black dark:text-white {{#match @custom.post_image_style "Full"}}text-right pr-3 {{/match}} text-[12px] {{#match @custom.post_image_style "Small"}} text-center {{/match}}">{{feature_image_caption}}</figcaption>
+                    {{/if}}
+                </figure>  
+            {{/if}}
+         {{/match}}   
+            <div class="pb-8 lg:p-8">
+                <section class="m-auto px-2 xl:w-2/3">
+                    {{#match @page.show_title_and_feature_image}}
+                    <h1 class="font-heading py-6 sm:text-4xl lg:text-6xl text-slate-900 dark:text-white hover:text-slate-700 font-black">
+                        {{title}}
+                    </h1>
+                    {{/match}}
+                    <div class="post-content">
+                        <article class="gh-content">
+                            {{content}}
+                        </article>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </article>
+{{/post}}

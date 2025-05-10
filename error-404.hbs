@@ -1,0 +1,45 @@
+{{!< default}}
+
+{{!--
+
+There are two error files in this theme, one for 404s and one for all other errors.
+This file is the former, and handles all 404 Page Not Found errors.
+
+The 404 error is the most common error that a visitor might see, for example when
+following a broken link
+
+Keep this template as lightweight as you can!
+
+--}}
+
+
+  <div class="container mx-auto">
+    <div class="flex justify-center items-center py-20 px-8 bg-slate-100 rounded-3xl">
+      <div class="max-w-7xl mx-auto">
+        <div class="md:max-w-md mx-auto text-center"><img class="mx-auto" src="{{@site.logo}}" alt=""/>
+          <h3 class="font-heading text-2xl text-blue-500 font-black tracking-tight">404</h3>
+          <h2 class="font-heading mb-6 text-4xl md:text-5xl lg:text-6xl text-slate-900 font-black tracking-tight">Page not found</h2>
+          <p class="mb-6 text-slate-500 font-bold">We&rsquo;re sorry, the page you requested could not be found. Please go back to the homepage</p>
+          <div class="flex flex-wrap justify-center -m-2">
+            <div class="w-full md:w-auto p-2"><a class="block w-full px-4 py-2.5 text-sm text-center text-white font-bold bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:ring-blue-200 rounded-full" href="/">Go back to Homepage</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{{!-- Given that people landing on this page didn't find what they
+were looking for, let's give them some alternative stuff to read. --}}
+<aside class="container mx-auto mt-5">
+    <div class="py-16 px-8 bg-slate-100 rounded-3xl">
+        {{#get "posts" include="authors" limit="3" as |more_posts|}}
+            {{#if more_posts}}
+                <div class="flex flex-wrap -m-4">
+                    {{#foreach more_posts}}
+                        {{> "post-card"}}
+                    {{/foreach}}
+                </div>
+            {{/if}}
+        {{/get}}
+    </div>
+</aside>

@@ -1,0 +1,44 @@
+
+{{!--This partial is used to display a featured post on the homepage.
+  It is used in the home.hbs template.--}}
+<a href="{{url}}" class="hidden sm:block" arial-label="link for post">
+    <div class='hidden sm:block mb-6 py-20 px-8 rounded-3xl'style="background-image: url('{{img_url feature_image}}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+        <div class='max-w-7xl mx-auto'>
+            <div class='p-10 lg:max-w-md bg-white dark:bg-slate-900 rounded-3xl'>
+                <p class='mb-3 text-lg font-bold'>
+                    <span class=" flex  text-black dark:text-white">{{#if featured}}<span class="flex items-center text-red-500">{{> "icons/fire"}}&nbsp;{{t "Featured"}}</span>&nbsp;-&nbsp;{{/if}}{{#primary_tag}}{{name}}{{/primary_tag}} </span>
+                </p>
+                <h2 class='font-heading mb-6 text-2xl md:text-3xl text-gray-900 dark:text-gray-300 font-black'>
+                    {{#unless access}}
+                        {{^has visibility="public"}}
+                            {{#unless feature_image}}
+                                {{> "icons/lock"}}
+                            {{/unless}}
+                        {{/has}}
+                    {{/unless}}
+                    {{title}}
+                </h2>
+                <p class='mb-14 text-gray-500 dark:text-gray-300 font-bold'>
+                    {{excerpt}}...
+                </p>
+                <div class="flex space-x-5 text-center">
+                    <p class="text-sm text-gray-500 dark:text-gray-300 font-bold"> 
+                        <time datetime="{{date format="YYYY-MM-DD"}}">{{date}}</time>
+                        &bull; 
+                        {{#if reading_time}}
+                        <span class="">{{reading_time}}</span>
+                        {{/if}}
+                        {{#if @site.comments_enabled}}
+                            {{comment_count}}
+                        {{/if}}
+                    </p>
+                    <a class='flex items-center' href='{{url}}'>
+                        <span class='font-bold text-sm hover:opacity-75' style="color:{{@site.accent_color}};" >
+                            {{ t "Read More"}}
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</a>

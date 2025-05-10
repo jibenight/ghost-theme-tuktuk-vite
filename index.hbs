@@ -1,0 +1,85 @@
+{{!< default}}
+
+{{!-- hero section --}}
+<div class="container mx-auto {{#match @custom.header_style "Hidden"}}hidden{{/match}}">
+    <div class="mb-8 p-8 rounded-3xl bg-slate-100 dark:bg-slate-800">
+        <div class="flex flex-wrap {{#if @site.cover_image}}flex-col md:flex-row-reverse lg:items-center{{/if}} -m-8">
+            <div class="w-full {{#if @site.cover_image}}md:w-1/2{{/if}} p-3 mx-auto">
+                <div class="md:max-w-lg mx-auto text-center">
+                    {{#if @site.logo}}
+                        <div class="w-32 mx-auto mb-4">
+                            <img width="100%" height="100%" class="{{#match @custom.header_style "Without logo"}}hidden{{/match}} " src="{{@site.logo}}" alt="{{@site.title}}">
+                        </div>
+                    {{/if}}
+                    {{#if @site.title}}
+                        <h1 class="font-heading mb-6 text-4xl md:text-5xl lg:text-6xl text-slate-800 dark:text-slate-300 font-black tracking-tight {{#match @custom.title_font "Nunito"}} font-nunito {{/match}}">{{@site.title}}</h1>
+                    {{/if}}
+                    {{#if @site.description}}
+                        <p class="md:max-w-md mx-auto text-slate-500 font-bold">{{@site.description}}</p>
+                    {{/if}}
+                </div>
+            </div>
+            {{#if @site.cover_image}}
+                <div class="w-full lg:w-1/2 p-3">
+                    <div class="w-full h-full overflow-hidden rounded-3xl shadow-md">
+                        <img
+                            class="w-full h-full object-cover rounded-3xl"
+                            srcset="{{img_url @site.cover_image size="s"}} 300w,
+                                    {{img_url @site.cover_image size="m"}} 600w,
+                                    {{img_url @site.cover_image size="l"}} 1000w,
+                                    {{img_url @site.cover_image size="xl"}} 2000w"
+                            sizes="(min-width: 1024px) 50vw, 100vw"
+                            src="{{img_url @site.cover_image size="xl"}}"
+                            alt="{{@site.title}}"
+                        />
+                    </div>
+                </div>
+
+            {{/if}}
+        </div>
+    </div>
+</div>
+
+{{!-- getyourguide link --}}
+<div class='container mx-auto m-6'>
+  <div class='py-16 px-8 md:px-16 bg-slate-100 dark:bg-slate-800 overflow-hidden rounded-3xl'>
+    <div class="text-center">
+         <h2 class='font-heading mb-4 text-2xl md:text-4xl text-slate-900 dark:text-slate-300 font-black tracking-tight'> Découvre les meilleures activités à réserver maintenant :</h2>
+        <div data-gyg-widget="auto" data-gyg-partner-id="J1WPH39"></div>
+    </div>
+  </div>
+</div>
+
+{{!-- The main content area --}}
+<main id="site-main" class="container mx-auto">
+        <div class="py-16 px-2 lg:p-3 bg-slate-100  dark:bg-slate-800 rounded-3xl">
+            
+
+                {{!-- featured post --}}
+                {{#get "posts" filter="featured:true" include="tags" limit="1" order="published_at desc" as |postsfeat|}}
+                    {{#foreach postsfeat}}
+                        {{> "post-featured"}}
+                    {{/foreach}}
+                {{/get}}
+
+                {{!-- intro --}}
+                {{#if @custom.second_title}}
+                    <div class="mb-12 md:max-w-4xl mx-auto text-center">
+                        <h2 class="font-heading mb-6 text-4xl md:text-5xl lg:text-6xl text-slate-800 dark:text-slate-300 font-black tracking-tight">
+                            {{@custom.second_title}}
+                        </h2>
+                    </div>
+                {{/if}}
+
+                {{!-- posts --}}
+                <div class="flex flex-wrap {{#match @custom.feed_layout "List"}} flex-col {{/match}} -m-4 mb-6 post-feed">
+                    {{#foreach posts}}
+                        {{> "post-card"}}
+                    {{/foreach}}
+                </div>
+
+            
+        </div>
+        {{!-- newsletter --}}
+        {{> "newsletter"}}
+</main>

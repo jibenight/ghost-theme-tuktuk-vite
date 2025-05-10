@@ -1,0 +1,57 @@
+{{! A signup call to action is displayed here, unless viewed as a logged-in member }}
+{{#if @site.members_enabled}}
+  {{#unless @member}}
+    {{#unless @site.comments_enabled}}
+      {{#if access}}
+        <div class='container mx-auto m-6'>
+          <div
+            class='py-16 px-8 md:px-16 bg-slate-100 dark:bg-slate-800 overflow-hidden rounded-3xl'
+          >
+            <div class='flex flex-wrap items-center -m-4'>
+
+              <div class='w-full md:w-1/2 p-4'>
+                {{#if @custom.email_signup_text}}
+                  <h2
+                    class='font-heading text-center text-2xl md:text-4xl text-slate-900 dark:text-slate-300 font-black tracking-tight'
+                  >
+                    {{@custom.email_signup_text}}
+                  </h2>
+                {{/if}}
+              </div>
+              <div class='w-full md:w-1/2 p-4'>
+                <div class='md:max-w-md md:ml-auto'>
+                  <div class='flex flex-wrap -m-2'>
+                    <div class='w-full lg:flex-1 p-2'>
+                      <input
+                        class='px-6 py-3.5 w-full text-lg text-gray-500 font-bold bg-white outline-none focus:ring-4 focus:ring-blue-200 placeholder-gray-500 rounded-full'
+                        id='newsletterLightReverseInput3-1'
+                        type='text'
+                        placeholder='Email'
+                        href='#/portal'
+                        data-portal
+                      />
+                    </div>
+                    <div class='w-full lg:w-auto p-2'>
+                      <div class='flex flex-wrap justify-center -m-2'>
+                        <div class='w-full lg:w-auto p-2'>
+                          <a
+                            class='block w-full px-8 py-3.5 text-lg text-center text-white font-bold hover:bg-blue-600 focus:ring-4 focus:ring-blue-200 rounded-full'
+                            href='#/portal'
+                            data-portal
+                            style='background-color:{{@site.accent_color}};'
+                          >
+                            {{t 'Subscribe'}}
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {{/if}}
+    {{/unless}}
+  {{/unless}}
+{{/if}}

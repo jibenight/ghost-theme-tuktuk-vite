@@ -1,0 +1,115 @@
+{{!< default}}
+{{!-- The tag above means: insert everything in this file
+into the {body} tag of the default.hbs template --}}
+{{#post}}
+{{!-- Everything inside the #post block pulls data from the post --}}
+<article class="w-full bg-white dark:bg-slate-800 dark:text-white rounded-3xl mb-6">   
+    <div class=" {{#match @custom.post_image_style "Small"}} pt-6 {{/match}}">
+        <figure>
+            <img width="100%" height="100%" class="{{#match @custom.post_image_style "Full"}}w-full rounded-t-3xl{{/match}}{{#match @custom.post_image_style "Hidden"}} hidden{{/match}}{{#match @custom.post_image_style "Small"}} w-1/2 mx-auto{{/match}} sm:h-96 lg:h-[500px] object-cover"
+                                srcset="{{img_url feature_image size="s"}} 300w,
+                                        {{img_url feature_image size="m"}} 600w,
+                                        {{img_url feature_image size="l"}} 1000w,
+                                        {{img_url feature_image size="xl"}} 2000w"
+                                sizes="(max-width: 1000px) 400px, 800px"
+                                src="{{img_url feature_image size="m"}}"
+                                alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
+                                {{!-- loading="lazy" --}}
+                            />
+            {{#if feature_image_caption}}
+                <figcaption class="italic text-black dark:text-white {{#match @custom.post_image_style "Full"}}text-right pr-3 {{/match}} {{#match @custom.post_image_style "Hidden"}} hidden{{/match}} text-xs sm:text-[12px] {{#match @custom.post_image_style "Small"}} text-center {{/match}}">{{feature_image_caption}}</figcaption>
+            {{/if}}
+        </figure>
+        <div class="pb-8 lg:p-8">
+            <article class="m-auto">
+                <header class="gh-canvas">
+                    <div class="flex items-center mt-5">
+                        {{#primary_tag}}
+                        <span class="text-sm text-black dark:text-white">{{name}} 
+                        </span>
+                         <span class="mx-1">
+                                &bull; 
+                        </span>
+                        {{/primary_tag}}
+                        <span class="text-sm text-black dark:text-white italic">
+                            <time datetime="{{date format="YYYY-MM-DD"}}">
+                                {{date}}
+                            </time>
+                            <span class="mx-1">
+                                &bull; 
+                            </span>
+                            {{#if reading_time}}
+                                <span class="">
+                                    {{reading_time minute="1 minute" minutes="% minutes"}}
+                                </span>
+                            {{/if}}
+                            {{#if @site.comments_enabled}}
+                                {{comment_count}}
+                            {{/if}}
+                        </span>
+                    </div>
+                    <h1 class="text-slate-900 dark:text-white mb-1">
+                        {{#unless access}}
+                            {{^has visibility="public"}}
+                                {{#unless feature_image}}
+                                    {{> "icons/lock"}}
+                                {{/unless}}
+                            {{/has}}
+                        {{/unless}}
+                    {{title}}
+                    </h1>
+                     
+                </header>
+                <section class="gh-content gh-canvas">
+                    {{content}}
+                    {{#primary_author}}
+                        <p class="mt-2 italic text-slate-500 dark:text-white">{{t "Published by:"}} <a href="{{url}}">{{name}}</a></p>
+                    {{/primary_author}}
+                </section>
+                {{#if comments}}
+                    <section class="article-comments gh-canvas">
+                        {{comments}}
+                    </section>
+                {{/if}}
+            </article>
+        </div>
+    </div>
+</article>
+
+{{!-- getyourguide link --}}
+<div class='container mx-auto m-4'>
+  <div class='py-16 px-8 md:px-16 bg-slate-100 dark:bg-slate-800 overflow-hidden rounded-3xl'>
+    <div class="text-center">
+         <h2 class='font-heading mb-4 text-2xl md:text-4xl text-slate-900 dark:text-slate-300 font-black tracking-tight'> Découvre les meilleures activités à réserver maintenant :</h2>
+        <div data-gyg-widget="auto" data-gyg-partner-id="J1WPH39"></div>
+    </div>
+  </div>
+</div>
+
+{{!-- A signup call to action is displayed here, unless viewed as a logged-in member --}}
+{{#if @site.members_enabled}}
+    {{#unless @member}}
+        {{#unless @site.comments_enabled}}
+            {{#if access}}
+                {{> "newsletter"}}
+            {{/if}}
+        {{/unless}}
+    {{/unless}}
+{{/if}}
+
+{{!-- Read more links, just above the footer --}}
+{{#if @custom.show_recent_posts_footer}}
+    {{!-- This query gets the latest 3 posts on the site, but adds a filter to
+    exclude the post we're currently on from being included. --}}
+    {{#get "posts" filter="primary_tag:{{primary_tag.slug}}" limit="3" as |more_posts|}}
+        {{#if more_posts}}
+            <div class="flex flex-wrap post-feed mb-6 lg:p-4 bg-slate-100  dark:bg-slate-800 rounded-3xl">
+                {{#foreach posts}}
+                    {{> "post-card"}}
+                {{/foreach}}
+            </div>
+        {{/if}}
+    {{/get}}
+{{/if}}
+
+{{/post}}

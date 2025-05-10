@@ -1,0 +1,23 @@
+{{! Ce partial affiche tous les tags disponibles sur le site }}
+
+{{#get 'tags' limit='all' include='count.posts'}}
+  {{#if this}}
+    <section class='widget widget-tags mt-6'>
+      <h3 class='text-xl font-semibold mb-2 text-center'>Tags populaires</h3>
+      <ul class='flex flex-wrap justify-center gap-3 text-sm'>
+        {{#foreach this}}
+          <li>
+            <a
+              href='{{url}}'
+              title='{{name}}'
+              class='px-3 py-1 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white hover:bg-slate-300 dark:hover:bg-slate-600 transition'
+            >
+              {{name}}
+              ({{count.posts}})
+            </a>
+          </li>
+        {{/foreach}}
+      </ul>
+    </section>
+  {{/if}}
+{{/get}}
