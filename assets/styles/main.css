@@ -1,0 +1,520 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import de la police Nunito */
+@font-face {
+  font-family: 'nunito';
+  src: url(../fonts/nunito/Nunito-VariableFont_wght.ttf);
+  font-display: swap;
+}
+
+/* Content grid
+/* ---------------------------------------------------------- */
+
+/* Canvas creates a multi-column, centered grid which the post
+is laid out on top of. Canvas just defines the grid, we don't
+use it for applying any other styles. */
+
+.gh-canvas {
+  display: grid;
+  grid-template-columns:
+    [full-start]
+    minmax(max(4vmin, 20px), auto)
+    [wide-start]
+    minmax(auto, 240px)
+    [main-start]
+    min(720px, calc(100% - max(8vmin, 40px)))
+    [main-end]
+    minmax(auto, 240px)
+    [wide-end]
+    minmax(max(4vmin, 20px), auto)
+    [full-end];
+}
+
+.gh-canvas > * {
+  grid-column: main-start / main-end;
+}
+
+.kg-width-wide {
+  grid-column: wide-start / wide-end;
+}
+
+.kg-width-full {
+  grid-column: full-start / full-end;
+}
+
+.kg-width-full img {
+  width: 100%;
+}
+
+/* Content
+/* ---------------------------------------------------------- */
+
+/* Content refers to styling all page and post content that is
+created within the Ghost editor. The main content handles
+headings, text, images and lists. We deal with cards lower down. */
+
+/* Default vertical spacing */
+.gh-content > * + * {
+  margin-top: max(3.2vmin, 24px);
+  margin-bottom: 0;
+}
+
+/* [id] represents all headings h1-h6, reset all margins */
+.gh-content > [id] {
+  margin: 0;
+}
+
+/* Add back a top margin to all headings, unless a heading
+is the very first element in the post content */
+.gh-content > [id]:not(:first-child) {
+  margin: 2em 0 0;
+}
+
+/* Add a small margin between a heading and anything after it */
+.gh-content > [id] + * {
+  margin-top: 0.4rem !important;
+}
+
+/* A larger margin before/after HRs and blockquotes */
+.gh-content > hr,
+.gh-content > blockquote {
+  position: relative;
+  margin-top: max(4.8vmin, 32px);
+}
+.gh-content > hr + *,
+.gh-content > blockquote + * {
+  margin-top: max(4.8vmin, 32px) !important;
+}
+
+/* Now the content typography styles */
+.gh-content a {
+  text-decoration: underline;
+  word-break: break-word;
+}
+
+.gh-content > blockquote:not([class]),
+.gh-content > ol,
+.gh-content > ul,
+.gh-content > dl,
+.gh-content > p {
+  font-weight: 400;
+  font-size: calc(1rem + 0.2vw);
+  line-height: calc(1.5rem + 0.2vw);
+}
+
+.gh-content ol {
+  list-style: decimal;
+}
+
+.gh-content ul {
+  list-style: disc;
+}
+
+.gh-content li {
+  padding-left: 0.3em;
+  margin-bottom: 0.3em;
+  font-size: calc(1rem + 0.2vw);
+}
+
+.gh-content .kg-callout-card .kg-callout-text,
+.gh-content .kg-toggle-card .kg-toggle-content > ol,
+.gh-content .kg-toggle-card .kg-toggle-content > ul,
+.gh-content .kg-toggle-card .kg-toggle-content > p {
+  font-weight: 400;
+  font-size: 1.9rem;
+  line-height: 1.6em;
+}
+
+.gh-content .kg-product-card .kg-product-card-description > p,
+.gh-content .kg-product-card .kg-product-card-description > ol,
+.gh-content .kg-product-card .kg-product-card-description > ul {
+  font-size: 1.2rem;
+  line-height: 1.6em;
+}
+
+.gh-content .kg-callout-card .kg-callout-emoji {
+  font-size: 2.1rem;
+  line-height: 1.4em;
+}
+
+.gh-content .kg-toggle-card .kg-toggle-heading-text {
+  font-size: 1.5rem;
+}
+
+.has-sans-body .gh-content > blockquote,
+.has-sans-body .gh-content > ol,
+.has-sans-body .gh-content > ul,
+.has-sans-body .gh-content > dl,
+.has-sans-body .gh-content > p,
+.has-sans-body .gh-content .kg-callout-card .kg-callout-text,
+.has-sans-body .gh-content .kg-toggle-card .kg-toggle-content > ol,
+.has-sans-body .gh-content .kg-toggle-card .kg-toggle-content > ul,
+.has-sans-body .gh-content .kg-toggle-card .kg-toggle-content > p {
+  font-family: var(--font-sans);
+}
+
+.gh-content > ul,
+.gh-content > ol,
+.gh-content > dl,
+.gh-content .kg-toggle-card .kg-toggle-content > ol,
+.gh-content .kg-toggle-card .kg-toggle-content > ul,
+.gh-content .kg-product-card .kg-product-card-description > ol,
+.gh-content .kg-product-card .kg-product-card-description > ul {
+  padding-left: 1.9em;
+}
+
+.gh-content > blockquote:not([class]) {
+  position: relative;
+  font-style: italic;
+  padding: 0;
+}
+
+.gh-content > blockquote:not([class])::before {
+  content: '';
+  position: absolute;
+  left: -1.5em;
+  top: 0;
+  bottom: 0;
+  width: 0.3rem;
+  background: var(--ghost-accent-color);
+}
+
+.gh-content :not(pre) > code {
+  vertical-align: middle;
+  padding: 0.15em 0.4em 0.15em;
+  border: #e1eaef 1px solid;
+  font-weight: 400 !important;
+  font-size: 0.9em;
+  line-height: 1em;
+  color: #15171a;
+  background: #f0f6f9;
+  border-radius: 0.25em;
+}
+
+.gh-content pre {
+  overflow: auto;
+  padding: 16px 20px;
+  color: var(--color-wash);
+  font-size: 1.4rem;
+  line-height: 1.5em;
+  background: var(--color-darkgrey);
+  border-radius: 5px;
+  box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.1), 0 0 1px rgba(0, 0, 0, 0.4);
+}
+
+@media (max-width: 650px) {
+  .gh-content > blockquote:not([class]),
+  .gh-content > ol,
+  .gh-content > ul,
+  .gh-content > dl,
+  .gh-content > p,
+  .gh-content .kg-callout-card .kg-callout-text,
+  .gh-content .kg-toggle-card .kg-toggle-content > ol,
+  .gh-content .kg-toggle-card .kg-toggle-content > ul,
+  .gh-content .kg-toggle-card .kg-toggle-content > p {
+    font-size: 1.8rem;
+  }
+
+  .gh-content .kg-product-card .kg-product-card-description > p,
+  .gh-content .kg-product-card .kg-product-card-description > ol,
+  .gh-content .kg-product-card .kg-product-card-description > ul {
+    font-size: 1.6rem;
+  }
+
+  .gh-content blockquote:not([class])::before {
+    left: min(-4vmin, -20px);
+  }
+}
+
+/* Cards
+/* ---------------------------------------------------------- */
+
+/* Cards are dynamic blocks of content which appear within Ghost
+posts, for example: embedded videos, tweets, galleries, or
+specially styled bookmark links. We add extra styling here to
+make sure they look good, and are given a bit of extra spacing. */
+
+/* Add extra margin before/after any cards,
+except for when immediately preceeded by a heading */
+.gh-content :not(.kg-card):not([id]) + .kg-card {
+  margin-top: 6vmin;
+  margin-bottom: 0;
+}
+.gh-content .kg-card + :not(.kg-card) {
+  margin-top: 6vmin;
+  margin-bottom: 0;
+}
+
+/* This keeps small embeds centered */
+.kg-embed-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+/* This keeps small iamges centered */
+.kg-image-card img {
+  margin: auto;
+}
+
+.has-serif-title .kg-toggle-card .kg-toggle-heading-text {
+  font-family: var(--font-serif);
+}
+
+.gh-content .kg-callout-card-accent a {
+  text-decoration: underline;
+}
+
+.kg-blockquote-alt {
+  font-family: var(--font-serif);
+  color: var(--color-midgrey);
+}
+
+.has-sans-body .kg-blockquote-alt {
+  font-family: var(--font-sans);
+}
+
+.kg-card.kg-header-card.kg-style-dark {
+  background: var(--color-darkgrey);
+}
+
+.kg-header-card.kg-style-light h2.kg-header-card-header {
+  color: color-mod(var(--color-darkgrey) l(-5%));
+}
+
+.has-serif-title .kg-header-card h2.kg-header-card-header {
+  font-family: var(--font-serif);
+}
+
+/* Captions */
+figcaption {
+  text-align: center;
+  color: #000;
+  /* font-size: 1.3rem;
+  line-height: 1.4em; */
+}
+figcaption strong {
+  color: rgba(0, 0, 0, 0.8);
+}
+figcaption a {
+  text-decoration: none;
+}
+
+/* Highly specific styles for traditional Instagram embeds */
+iframe.instagram-media {
+  margin-top: 6vmin !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  margin-bottom: 0 !important;
+}
+
+iframe.instagram-media + script + :not([id]) {
+  margin-top: 6vmin;
+}
+
+/* Card captions
+/* ---------------------------------------------------------- */
+.kg-width-full.kg-card-hascaption {
+  display: grid;
+  grid-template-columns: inherit;
+}
+
+.kg-width-wide.kg-card-hascaption img {
+  grid-column: wide-start / wide-end;
+}
+.kg-width-full.kg-card-hascaption img {
+  grid-column: 1 / -1;
+}
+
+.kg-width-full.kg-card-hascaption figcaption {
+  grid-column: main-start / main-end;
+}
+
+.article-comments {
+  margin: 6vmin 0 0 0;
+}
+
+/* Tables */
+.gh-content table:not(.gist table) {
+  display: inline-block;
+  overflow-x: auto;
+  max-width: 100%;
+  width: auto;
+  border-spacing: 0;
+  border-collapse: collapse;
+  font-family: var(--font-sans);
+  font-size: 1.6rem;
+  white-space: nowrap;
+  vertical-align: top;
+  -webkit-overflow-scrolling: touch;
+  background: radial-gradient(
+        ellipse at left,
+        rgba(0, 0, 0, 0.2) 0%,
+        rgba(0, 0, 0, 0) 75%
+      )
+      0 center,
+    radial-gradient(
+        ellipse at right,
+        rgba(0, 0, 0, 0.2) 0%,
+        rgba(0, 0, 0, 0) 75%
+      )
+      100% center;
+  background-attachment: scroll, scroll;
+  background-size: 10px 100%, 10px 100%;
+  background-repeat: no-repeat;
+}
+
+.gh-content table:not(.gist table) td:first-child {
+  background-image: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 20px 100%;
+  background-repeat: no-repeat;
+}
+
+.gh-content table:not(.gist table) td:last-child {
+  background-image: linear-gradient(
+    to left,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-position: 100% 0;
+  background-size: 20px 100%;
+  background-repeat: no-repeat;
+}
+
+.gh-content table:not(.gist table) th {
+  color: var(--color-darkgrey);
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  text-align: left;
+  text-transform: uppercase;
+  background-color: color-mod(var(--color-wash) l(+4%));
+}
+
+.gh-content table:not(.gist table) th,
+.gh-content table:not(.gist table) td {
+  padding: 6px 12px;
+  border: color-mod(var(--color-wash) l(-1%) s(-5%)) 1px solid;
+}
+
+/* Comments
+/* ---------------------------------------------------------- */
+.comments {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 60px 0 44px;
+}
+
+.comments-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  width: 100%;
+  max-width: 720px;
+}
+
+.comments h2 {
+  width: 100%;
+  max-width: 720px;
+  font-weight: 800;
+  font-size: 3.4rem;
+}
+
+.comments .comment-count {
+  color: var(--color-midgrey);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.comments #ghost-comments-root {
+  width: 100%;
+  max-width: 720px;
+}
+
+/* Title pages and posts
+/* ---------------------------------------------------------- */
+h1 {
+  font-size: calc(1.3rem + 1.5vw);
+  line-height: calc(1.6rem + 1.5vw);
+  font-weight: 800;
+}
+
+.gh-content h2 {
+  font-size: calc(1.2em + 1.2vw);
+  line-height: calc(1.5rem + 1.2vw);
+  font-weight: 600;
+}
+
+.gh-content h3 {
+  font-size: calc(1.1rem + 0.9vw);
+  line-height: calc(1.3rem + 0.9vw);
+  font-weight: 600;
+}
+
+.gh-content h4 {
+  font-size: calc(1rem + 0.6vw);
+  line-height: calc(1rem + 0.6vw);
+  font-weight: 600;
+}
+
+.gh-content h5 {
+  font-size: calc(0.9rem + 0.3vw);
+  line-height: calc(0.9rem + 0.3vw);
+  font-weight: 600;
+}
+
+.gh-content h6 {
+  font-size: calc(0.8rem);
+  line-height: calc(0.8rem);
+  font-weight: 600;
+}
+.gh-content p {
+  font-size: calc(1rem + 0.2vw);
+  line-height: calc(1.5rem + 0.2vw);
+}
+
+/* .kg-card p {
+  font-size: calc(1rem + 0.2vw) !important;
+  line-height: calc(1.5rem + 0.2vw);
+} */
+
+/* Bookmarks
+/* ---------------------------------------------------------- */
+.kg-bookmark-title {
+  font-size: 1rem !important;
+  line-height: 1.4em;
+  font-weight: 600;
+}
+
+.kg-bookmark-description {
+  font-size: 1rem !important;
+  line-height: 1.5em;
+}
+
+.kg-bookmark-metadata {
+  font-size: 1rem !important;
+}
+
+/* header section */
+.kg-header-card-header,
+.kg-header-card-subheader {
+  color: #15171a !important;
+}
+
+.kg-header-card-button {
+  background-color: #15171a !important;
+  color: #e1eaef !important;
+}
+
+html.dark figcaption {
+  color: #fff;
+}
